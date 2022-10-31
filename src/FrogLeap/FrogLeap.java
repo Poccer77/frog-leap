@@ -2,8 +2,6 @@ package FrogLeap;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class FrogLeap {
@@ -13,6 +11,7 @@ public class FrogLeap {
         for (String name : names) {
             Contributor newContributor = new Contributor(Main.SDDH(name), 0);
             boolean userAlreadyExists = false;
+
             for (Contributor user : contributors) {
                 if (Objects.equals(user.name, newContributor.name)) {
                     System.out.println("User already exists");
@@ -20,8 +19,10 @@ public class FrogLeap {
                     break;
                 }
             }
+
             if (!userAlreadyExists) {
                 contributors.add(newContributor);
+                System.out.println("Added " + name);
             }
         }
 
@@ -34,7 +35,7 @@ public class FrogLeap {
 
         for (Contributor user : contributors){
             if (Objects.equals(user.name, Main.SDDH(name))){
-                user.account = Math.ceil((user.account + amount) * 100) / 100;
+                user.account = Math.ceil((user.account + amount) * 100) / 100; //eliminates rounding errors
             }
             if (bottom == null || bottom.account > user.account) {
                 bottom = user;
@@ -42,7 +43,7 @@ public class FrogLeap {
             System.out.println(user.name +  ", " + user.account);
         }
 
-        System.out.println(bottom.name + " zahlt als naechstes");
+        System.out.println(bottom.name + " zahlt als nächstes");
         return contributors;
     }
 }

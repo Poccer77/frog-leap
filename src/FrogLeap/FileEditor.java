@@ -2,34 +2,27 @@ package FrogLeap;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class FileEditor {
 
+    private BufferedReader br;
+    private BufferedWriter bw;
+
     public FileEditor() throws IOException {
+
+        File newFile = new File("balance.txt");
+        newFile.createNewFile();
+        br = new BufferedReader(new FileReader("balance.txt"));
+        bw = new BufferedWriter(new FileWriter("balance.txt"));
     }
 
-    public ArrayList<Contributor> readFile () throws IOException {
-
-        BufferedReader br;
-
-        try {br = new BufferedReader(new FileReader("balance.txt"));}
-        catch (IOException exc) {
-            File newFile = new File("balance.txt");
-            newFile.createNewFile();
-            br = new BufferedReader(new FileReader("balance.txt"));
-        } //Try-catch to account for missing logfile
+    public ArrayList<Contributor> readFile() throws IOException {
 
         ArrayList<Contributor> contributors = new ArrayList<>();
-
         String user = br.readLine();
 
         for (; user != null; user = br.readLine()) {
-            contributors.add(
-                    new Contributor(
-                    user.substring(0, 1).toUpperCase() + user.substring(1), //capitalizes the first letter for prettiness
-                    Double.parseDouble(br.readLine())));
+            contributors.add(new Contributor(Main.SDDH(user), Double.parseDouble(br.readLine())));
         }
 
         br.close();
@@ -37,8 +30,6 @@ public class FileEditor {
     }
 
     public void writeBack(ArrayList<Contributor> contributors) throws IOException {
-
-        BufferedWriter bw = new BufferedWriter(new FileWriter("balance.txt"));
 
         for (Contributor user : contributors){
             bw.write(user.name);
