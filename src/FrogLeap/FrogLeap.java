@@ -1,27 +1,48 @@
 package FrogLeap;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class FrogLeap {
 
-    public static contributor frogLeap(HashMap<String, Double> contributors, String name, double amount) throws IOException {
+    public ArrayList<Contributor> addNewContributor(ArrayList<Contributor> contributors, String[] names) {
 
-        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        for (String name : names) {
+            Contributor newContributor = new Contributor(Main.SDDH(name), 0);
+            boolean userAlreadyExists = false;
+            for (Contributor user : contributors) {
+                if (Objects.equals(user.name, newContributor.name)) {
+                    System.out.println("User already exists");
+                    userAlreadyExists = true;
+                    break;
+                }
+            }
+            if (!userAlreadyExists) {
+                contributors.add(newContributor);
+            }
+        }
 
-        double newAmount = (Math.ceil((contributors.get(name) + amount) * 100)) / 100;
+        return contributors;
+    }
 
-        contributors.put(name, newAmount);
+    public ArrayList<Contributor> frogLeap(ArrayList<Contributor> contributors, String name, double amount) throws IOException {
 
-        contributor bottom = null;
+        Contributor bottom = null;
 
-        for (String user : contributors.keySet()){
-            if (bottom == null || bottom.account > contributors.get(user)) bottom = new contributor(user, contributors.get(user));
-            System.out.println(user +  ", " + contributors.get(user));
+        for (Contributor user : contributors){
+            if (Objects.equals(user.name, Main.SDDH(name))){
+                user.account = Math.ceil((user.account + amount) * 100) / 100;
+            }
+            if (bottom == null || bottom.account > user.account) {
+                bottom = user;
+            }
+            System.out.println(user.name +  ", " + user.account);
         }
 
         System.out.println(bottom.name + " zahlt als naechstes");
-
-        return new contributor(name, newAmount);
+        return contributors;
     }
 }

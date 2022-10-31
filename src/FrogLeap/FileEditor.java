@@ -1,6 +1,8 @@
 package FrogLeap;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class FileEditor {
@@ -8,7 +10,7 @@ public class FileEditor {
     public FileEditor() throws IOException {
     }
 
-    public static HashMap<String, Double> readFile () throws IOException {
+    public ArrayList<Contributor> readFile () throws IOException {
 
         BufferedReader br;
 
@@ -17,32 +19,34 @@ public class FileEditor {
             File newFile = new File("balance.txt");
             newFile.createNewFile();
             br = new BufferedReader(new FileReader("balance.txt"));
-        }
+        } //Try-catch to account for missing logfile
 
-        HashMap<String, Double> contributors = new HashMap<>();
+        ArrayList<Contributor> contributors = new ArrayList<>();
 
-        String user;
+        String user = br.readLine();
 
-        while ((user = br.readLine()) != null) {
-            contributors.put(user.substring(0, 1).toUpperCase() + user.substring(1), Double.parseDouble(br.readLine()));
+        for (; user != null; user = br.readLine()) {
+            contributors.add(
+                    new Contributor(
+                    user.substring(0, 1).toUpperCase() + user.substring(1), //capitalizes the first letter for prettiness
+                    Double.parseDouble(br.readLine())));
         }
 
         br.close();
-
         return contributors;
     }
 
-    public static void writeBack(HashMap<String, Double> contributors) throws IOException {
+    public void writeBack(ArrayList<Contributor> contributors) throws IOException {
 
         BufferedWriter bw = new BufferedWriter(new FileWriter("balance.txt"));
 
-        for (String User : contributors.keySet()){
-            bw.write(User);
+        for (Contributor user : contributors){
+            bw.write(user.name);
             bw.newLine();
-            bw.write(contributors.get(User).toString());
+            bw.write(Double.toString(user.account));
             bw.newLine();
         }
+
         bw.close();
     }
-
 }

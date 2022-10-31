@@ -1,13 +1,14 @@
 package FrogLeap;
 
-public class contributor {
+import java.util.Objects;
+
+public class Contributor {
 
     public String name;
     public double account;
 
-    public contributor(String name, double account){
+    public Contributor(String name, double account){
         this.name = name;
         this.account = account;
     }
-
 }
