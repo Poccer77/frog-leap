@@ -1,7 +1,3 @@
-package FrogLeap;
-
-import java.util.Objects;
-
 public class Contributor {
 
     public String name;

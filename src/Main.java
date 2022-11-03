@@ -1,19 +1,15 @@
-package FrogLeap;
-
-import FrogLeap.FrogLeap;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Hashtable;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
 
+        Scanner scanner = new Scanner(System.in);
         FrogLeap frogLeap = new FrogLeap();
-        FileEditor fileEditor = new FileEditor();
+        FileEditor fileEditor = new FileEditor("src/balance.txt");
 
         ArrayList<Contributor> contributors = fileEditor.readFile();
 
@@ -24,7 +20,7 @@ public class Main {
         fileEditor.writeBack(contributors);
     }
 
-    public static String SDDH (String string){
+    public static String SDDH (String string) {
         return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
     }
 }

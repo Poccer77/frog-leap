@@ -1,22 +1,19 @@
-package FrogLeap;
-
 import java.io.*;
 import java.util.ArrayList;
 
 public class FileEditor {
 
-    private BufferedReader br;
-    private BufferedWriter bw;
+    private File file;
 
-    public FileEditor() throws IOException {
+    public FileEditor(String path) throws IOException {
 
-        File newFile = new File("balance.txt");
-        newFile.createNewFile();
-        br = new BufferedReader(new FileReader("balance.txt"));
-        bw = new BufferedWriter(new FileWriter("balance.txt"));
+        file = new File(path);
+        System.out.println(file.getAbsolutePath());
     }
 
     public ArrayList<Contributor> readFile() throws IOException {
+
+        BufferedReader br = new BufferedReader(new FileReader(file));
 
         ArrayList<Contributor> contributors = new ArrayList<>();
         String user = br.readLine();
@@ -30,6 +27,8 @@ public class FileEditor {
     }
 
     public void writeBack(ArrayList<Contributor> contributors) throws IOException {
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
         for (Contributor user : contributors){
             bw.write(user.name);

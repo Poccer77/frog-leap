@@ -1,5 +1,3 @@
-package FrogLeap;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -33,6 +31,10 @@ public class FrogLeap {
 
         Contributor bottom = null;
 
+        if (contributors.isEmpty()) {
+            throw new IllegalStateException("List of contributors is empty");
+        }
+
         for (Contributor user : contributors){
             if (Objects.equals(user.name, Main.SDDH(name))){
                 user.account = Math.ceil((user.account + amount) * 100) / 100; //eliminates rounding errors
@@ -43,7 +45,7 @@ public class FrogLeap {
             System.out.println(user.name +  ", " + user.account);
         }
 
-        System.out.println(bottom.name + " zahlt als nächstes");
+        System.out.println(bottom.name + " zahlt als naechstes");
         return contributors;
     }
 }
