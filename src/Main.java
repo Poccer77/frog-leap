@@ -7,15 +7,15 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Scanner scanner = new Scanner(System.in);
-        FrogLeap frogLeap = new FrogLeap();
-        FileEditor fileEditor = new FileEditor("src/balance.txt");
+        FileEditor fileEditor = new FileEditor("balance.txt", "Log.txt");
+        FrogLeap frogLeap = new FrogLeap(fileEditor);
 
         ArrayList<Contributor> contributors = fileEditor.readFile();
 
         contributors = (Main.SDDH(args[0]).equals("Init")) ?
                 frogLeap.addNewContributor(contributors, Arrays.copyOfRange(args, 1, args.length)) :
                 frogLeap.frogLeap(contributors, Main.SDDH(args[0]), Double.parseDouble(args[1]));
+
 
         fileEditor.writeBack(contributors);
     }

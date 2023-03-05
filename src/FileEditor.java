@@ -3,17 +3,19 @@ import java.util.ArrayList;
 
 public class FileEditor {
 
-    private File file;
+    private final File workFile;
+    private final File backLog;
 
-    public FileEditor(String path) throws IOException {
+    public FileEditor(String path, String path2) throws IOException {
 
-        file = new File(path);
-        System.out.println(file.getAbsolutePath());
+        workFile = new File(path);
+        backLog = new File(path2);
+        System.out.println(workFile.getAbsolutePath());
     }
 
     public ArrayList<Contributor> readFile() throws IOException {
 
-        BufferedReader br = new BufferedReader(new FileReader(file));
+        BufferedReader br = new BufferedReader(new FileReader(workFile));
 
         ArrayList<Contributor> contributors = new ArrayList<>();
         String user = br.readLine();
@@ -28,7 +30,7 @@ public class FileEditor {
 
     public void writeBack(ArrayList<Contributor> contributors) throws IOException {
 
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(workFile));
 
         for (Contributor user : contributors){
             bw.write(user.name);
@@ -36,6 +38,16 @@ public class FileEditor {
             bw.write(Double.toString(user.account));
             bw.newLine();
         }
+
+        bw.close();
+    }
+
+    public void log(String entry) throws IOException {
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter(backLog, true));
+
+        bw.write(entry);
+        bw.newLine();
 
         bw.close();
     }

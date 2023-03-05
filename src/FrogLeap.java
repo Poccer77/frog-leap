@@ -1,8 +1,16 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FrogLeap {
+
+    FileEditor fileEditor;
+
+    public FrogLeap(FileEditor fileEditor) {
+        this.fileEditor = fileEditor;
+    }
 
     public ArrayList<Contributor> addNewContributor(ArrayList<Contributor> contributors, String[] names) {
 
@@ -44,6 +52,10 @@ public class FrogLeap {
             }
             System.out.println(user.name +  ", " + user.account);
         }
+
+        String currentDate = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+
+        fileEditor.log(name + ", " + amount + " | " + currentDate);
 
         System.out.println(bottom.name + " zahlt als naechstes");
         return contributors;
